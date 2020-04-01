@@ -90,6 +90,15 @@ namespace FoodOrderApp.Models
 
             db.MenuItems.AddRange(seedMenu);
 
+            RestaurantInfo AuntBettys = new RestaurantInfo
+            {
+                Address = "1234 Main st. Snoqualmie, WA",
+                Cuisine= "Mixed",
+                PhoneNumber="4254284444",
+                RestaurantName="Aunt Betty's Bed and Breakfast"
+            };
+
+            db.RestaurantInfo.Add(AuntBettys);
         }
     }
 }
