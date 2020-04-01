@@ -14,10 +14,12 @@ namespace FoodOrderApp.Models
         [Required]
         public String DishName { get; set; }
         public String Description { get; set; }
+        public String ImageURL { get; set; }
         [Required]
         public decimal Price { get; set; }
         [Required]
         public String RestaurantName { get; set; }
+        public String MenuSection { get; set; }
 
     }
 }
