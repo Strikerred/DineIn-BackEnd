@@ -63,9 +63,9 @@ namespace FoodOrderApp
                 = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt_Key"]))
                 };
             });
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
