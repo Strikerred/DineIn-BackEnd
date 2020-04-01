@@ -51,12 +51,12 @@ namespace FoodOrderApp
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    //What to validate
+ 
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    //Setup validate data
+
                     ValidIssuer = Configuration["Jwt_Issuer"],
                     ValidAudience = Configuration["Jwt_Issuer"],
                     IssuerSigningKey
