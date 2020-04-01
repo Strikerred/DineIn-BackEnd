@@ -4,6 +4,7 @@ using System.Text;
 using FoodOrderApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FoodOrderApp.ViewModels;
 
 namespace FoodOrderApp.Data
 {
@@ -16,7 +17,7 @@ namespace FoodOrderApp.Data
             public DbSet<MenuItems> MenuItems { get; set; }
             public DbSet<Users> Users { get; set; }
             public DbSet<Orders> Orders { get; set; }
-        
+            public DbSet<FoodOrderApp.ViewModels.RoleVM> RoleVM { get; set; }
     }
 }
     
