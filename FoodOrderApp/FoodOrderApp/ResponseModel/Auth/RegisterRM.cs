@@ -8,8 +8,6 @@ namespace FoodOrderApp.ResponseModel.Auth
 {
     public class RegisterRM
     {
-        [Required]
-        public string Username { get; set; }
 
         [Required]
         [EmailAddress]

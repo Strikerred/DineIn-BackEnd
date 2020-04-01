@@ -4,13 +4,16 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FoodOrderApp.Data;
 using FoodOrderApp.ResponseModel.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -27,18 +30,21 @@ namespace FoodOrderApp.Controllers
         private IServiceProvider _serviceProvider;
         private ApplicationDbContext _context;
         private UserManager<IdentityUser> _userManager;
+        private readonly IEmailSender _emailSender;
 
         public AuthController(SignInManager<IdentityUser> signInManager,
                                 IConfiguration config,
                                 IServiceProvider serviceProvider,
                                 ApplicationDbContext context,
-                                UserManager<IdentityUser> userManager)
+                                UserManager<IdentityUser> userManager,
+                                IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _config = config;
             _serviceProvider = serviceProvider;
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -50,6 +56,22 @@ namespace FoodOrderApp.Controllers
             var result = await _userManager.CreateAsync(user, RegisterRM.Password);
             if (result.Succeeded)
             {
+                string code = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+                string codeTokenLink = Url.Action("confirmEmail", "Auth", new
+                {
+                    userid = user.Id,
+                    token = code
+                }, protocol: HttpContext.Request.Scheme);
+
+                //var callbackUrl = Url.Page(
+                //    "/Account/ConfirmEmail",
+                //    pageHandler: null,
+                //    values: new { userId = user.Id, code = code },
+                //    protocol: Request.Scheme);
+
+                await _emailSender.SendEmailAsync(RegisterRM.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(codeTokenLink)}'>clicking here</a>.");
+
                 if (user != null)
                 {
                     var tokenString = GenerateJSONWebToken(user);
@@ -62,6 +84,27 @@ namespace FoodOrderApp.Controllers
             jsonResponse.status = "Invalid Login";
             return Json(jsonResponse);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userId}'.");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            return new RedirectResult("https://www.google.ca");
+        }
+
 
         [HttpPost]
         [Route("Login")]
@@ -84,7 +127,7 @@ namespace FoodOrderApp.Controllers
                         var tokenString = GenerateJSONWebToken(user);
                         jsonResponse.token = tokenString;
                         jsonResponse.status = "OK";
-                        return Json(jsonResponse);
+                        return Json(new { url = "http://www.google.ca" } );
                     }
                 }
                 else if (result.IsLockedOut)

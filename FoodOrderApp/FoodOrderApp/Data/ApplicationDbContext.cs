@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FoodOrderApp.ViewModels;
 
 namespace FoodOrderApp.Data
 {
@@ -12,5 +13,6 @@ namespace FoodOrderApp.Data
             : base(options)
         {
         }
+        public DbSet<FoodOrderApp.ViewModels.RoleVM> RoleVM { get; set; }
     }
 }
