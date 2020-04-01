@@ -12,11 +12,15 @@ namespace FoodOrderApp.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
         [Required]
-        [ForeignKey("MenuItemId")]
-        public virtual MenuItems MenuItemId { get; set; }
+        public ICollection<MenuItems> MenuItems { get; set; }
         [Required]
-        [ForeignKey("UserId")]
-        public virtual Users Users { get; set; }
+        public String OrdererFirstName { get; set; }
+        [Required]
+        public String OrdererEmail { get; set; }
+        [Required]
+        public String OrdererPhoneNumber { get; set; }
+        [Required]
+        public decimal TotalOrderPrice { get; set; }
 
     }
 }

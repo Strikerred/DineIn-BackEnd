@@ -17,8 +17,7 @@ namespace FoodOrderApp.Models
         [Required]
         public decimal Price { get; set; }
         [Required]
-        [ForeignKey("RestaurantId")]
-        public virtual RestaurantInfo RestaurantInfo { get; set; }
+        public String RestaurantName { get; set; }
 
     }
 }
