@@ -65,7 +65,7 @@ namespace FoodOrderApp
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

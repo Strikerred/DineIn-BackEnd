@@ -11,6 +11,7 @@
 *.sln.docstates
 
 launchSettings.json
+sql.db
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
