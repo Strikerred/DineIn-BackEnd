@@ -34,7 +34,7 @@ namespace FoodOrderApp.Models
                 new MenuItems {DishName = "Spagetti",
                     ImageURL="https://cdn.pixabay.com/photo/2017/11/08/22/18/spaghetti-2931846_1280.jpg",
                     Price=12.95M,
-                    RestaurantName="Aunt Betty's Bed and Breakfast"
+                    RestaurantName="Aunt Betty's Bed and Breakfast",
                     MenuSection = "Lunch / Dinner"
                 },
                                 
@@ -55,7 +55,7 @@ namespace FoodOrderApp.Models
                 new MenuItems {DishName = "Cappicino",
                     ImageURL="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg",
                     Price=12.95M,
-                    RestaurantName="Aunt Betty's Bed and Breakfast"
+                    RestaurantName="Aunt Betty's Bed and Breakfast",
                     MenuSection= "Drinks"
                 },
                                                                
