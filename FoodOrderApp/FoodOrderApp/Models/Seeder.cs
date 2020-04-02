@@ -18,10 +18,6 @@ namespace FoodOrderApp.Models
 
         public void seedMenuData()
         {
-            if (db.MenuItems.Count() != 0)
-            {
-                return;
-            }
 
             MenuItems[] seedMenu = new MenuItems[]
             {
@@ -89,6 +85,8 @@ namespace FoodOrderApp.Models
             };
 
             db.MenuItems.AddRange(seedMenu);
+            db.SaveChanges();
+
 
             RestaurantInfo AuntBettys = new RestaurantInfo
             {
@@ -99,6 +97,8 @@ namespace FoodOrderApp.Models
             };
 
             db.RestaurantInfo.Add(AuntBettys);
+            db.SaveChanges();
+
         }
     }
 }
