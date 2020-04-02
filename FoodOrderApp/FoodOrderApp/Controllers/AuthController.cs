@@ -127,7 +127,7 @@ namespace FoodOrderApp.Controllers
                         var tokenString = GenerateJSONWebToken(user);
                         jsonResponse.token = tokenString;
                         jsonResponse.status = "OK";
-                        return Json(new { url = "http://www.google.ca" } );
+                        return Json(jsonResponse);
                     }
                 }
                 else if (result.IsLockedOut)
