@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using FoodOrderApp.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.OpenApi.Models;
 
 namespace FoodOrderApp
 {
@@ -69,6 +70,13 @@ namespace FoodOrderApp
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+            services.AddSwaggerGen(c => {
+
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDo API", Version = "v1"  });
+
+            });
+
             services.AddTransient<IEmailSender, EmailSender>(i =>
                 new EmailSender(
                     Configuration["EmailSettings_Domain"],
@@ -115,6 +123,18 @@ namespace FoodOrderApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+
+            {
+
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDo API V1");
+
+                c.RoutePrefix = string.Empty;
+
+            });
 
             app.UseRouting();
 
