@@ -24,20 +24,11 @@ namespace FoodOrderApp.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<CustomerInfo> CustomerInfo { get; set; }
         public virtual DbSet<FoodCategory> FoodCategory { get; set; }
-        public virtual DbSet<MenuItem> MenuItem { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<MenuItems> MenuItems { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<RestaurantInfo> RestaurantInfo { get; set; }
         public virtual DbSet<TransportationType> TransportationType { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlite("Data Source= .\\wwwroot\\sql.db;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -125,9 +116,6 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.CustomerId);
 
-                entity.HasIndex(e => e.CustomerId)
-                    .IsUnique();
-
                 entity.Property(e => e.CustomerId).ValueGeneratedNever();
 
                 entity.Property(e => e.Address).IsRequired();
@@ -136,52 +124,68 @@ namespace FoodOrderApp.Models
 
                 entity.Property(e => e.LastName).IsRequired();
 
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasColumnType("NUMERIC");
+                entity.Property(e => e.PhoneNumber).IsRequired();
+
+                entity.Property(e => e.UserRole).IsRequired();
+
+                entity.Property(e => e.UsersEmail).IsRequired();
             });
 
             modelBuilder.Entity<FoodCategory>(entity =>
             {
-                entity.HasIndex(e => e.FoodCategoryId)
-                    .IsUnique();
-
                 entity.Property(e => e.FoodCategoryId).ValueGeneratedNever();
 
                 entity.Property(e => e.CategoryName).IsRequired();
             });
 
-            modelBuilder.Entity<MenuItem>(entity =>
+            modelBuilder.Entity<MenuItems>(entity =>
             {
-                entity.HasIndex(e => e.MenuItemId)
-                    .IsUnique();
+                entity.HasKey(e => e.MenuItemId);
 
                 entity.Property(e => e.MenuItemId).ValueGeneratedNever();
 
                 entity.Property(e => e.DishName).IsRequired();
 
+                entity.Property(e => e.ImageUrl)
+                    .IsRequired()
+                    .HasColumnName("ImageURL");
+
+                entity.Property(e => e.MenuSection).IsRequired();
+
                 entity.Property(e => e.Price)
                     .IsRequired()
                     .HasColumnType("NUMERIC");
+
+                entity.HasOne(d => d.Restaurant)
+                    .WithMany(p => p.MenuItems)
+                    .HasForeignKey(d => d.RestaurantId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<Order>(entity =>
+            modelBuilder.Entity<Orders>(entity =>
             {
-                entity.HasIndex(e => e.OrderId)
-                    .IsUnique();
+                entity.HasKey(e => e.OrderId);
 
                 entity.Property(e => e.OrderId).ValueGeneratedNever();
 
-                entity.Property(e => e.OrderTotal)
-                    .IsRequired()
-                    .HasColumnType("NUMERIC");
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(d => d.MenuItem)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.MenuItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.PaymentType)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.PaymentTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<PaymentType>(entity =>
             {
-                entity.HasIndex(e => e.PaymentTypeId)
-                    .IsUnique();
-
                 entity.Property(e => e.PaymentTypeId).ValueGeneratedNever();
 
                 entity.Property(e => e.PaymentName).IsRequired();
@@ -191,26 +195,22 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.RestaurantId);
 
-                entity.HasIndex(e => e.RestaurantId)
-                    .IsUnique();
-
                 entity.Property(e => e.RestaurantId).ValueGeneratedNever();
 
                 entity.Property(e => e.Address).IsRequired();
 
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasColumnType("NUMERIC");
+                entity.Property(e => e.PhoneNumber).IsRequired();
 
                 entity.Property(e => e.RestaurantName).IsRequired();
+
+                entity.HasOne(d => d.FoodCategory)
+                    .WithMany(p => p.RestaurantInfo)
+                    .HasForeignKey(d => d.FoodCategoryId);
             });
 
             modelBuilder.Entity<TransportationType>(entity =>
             {
                 entity.HasKey(e => e.TransportationId);
-
-                entity.HasIndex(e => e.TransportationId)
-                    .IsUnique();
 
                 entity.Property(e => e.TransportationId).ValueGeneratedNever();
 

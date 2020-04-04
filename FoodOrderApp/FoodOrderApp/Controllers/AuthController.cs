@@ -63,12 +63,6 @@ namespace FoodOrderApp.Controllers
                     token = code
                 }, protocol: HttpContext.Request.Scheme);
 
-                //var callbackUrl = Url.Page(
-                //    "/Account/ConfirmEmail",
-                //    pageHandler: null,
-                //    values: new { userId = user.Id, code = code },
-                //    protocol: Request.Scheme);
-
                 await _emailSender.SendEmailAsync(RegisterRM.Email, "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(codeTokenLink)}'>clicking here</a>.");
 
@@ -76,7 +70,7 @@ namespace FoodOrderApp.Controllers
                 {
                     var tokenString = GenerateJSONWebToken(user);
                     jsonResponse.token = tokenString;
-                    jsonResponse.status = "OK";
+                    jsonResponse.status = "Please check your email";
                     return Json(jsonResponse);
                 }
             }
@@ -138,7 +132,7 @@ namespace FoodOrderApp.Controllers
                 }
             }
             jsonResponse.token = "";
-            jsonResponse.status = "Invalid Login";
+            jsonResponse.status = "Have you check your email? If so, either email or password didn't match";
             return Json(jsonResponse);
         }
 
