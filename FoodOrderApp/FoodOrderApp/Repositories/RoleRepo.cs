@@ -59,7 +59,7 @@ namespace FoodOrderApp.Repositories
 
         public bool CreateInitialRoles()
         {
-            string[] roleNames = { "Admin", "Manager", "Customer" };
+            string[] roleNames = { "Admin", "Owner", "Customer", "Driver" };
             foreach (var roleName in roleNames)
             {
                 var created = CreateRole(roleName);
