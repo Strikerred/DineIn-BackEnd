@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FoodOrderApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using FoodOrderApp.Data;
+using FoodOrderApp.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace FoodOrderApp.Controllers
 {
@@ -20,10 +26,10 @@ namespace FoodOrderApp.Controllers
 
         // Customer Data
         // show all customers
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CustomerInfo>>>GetCustomers()
         {
-            CustomerInfo customerInfo = new CustomerInfo(_context);
-            return View();
+            return await _context.CustomerInfo.ToListAsync();
         }
 
 
