@@ -15,11 +15,11 @@ namespace FoodOrderApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class CustomerController : Controller
+    public class CustomerInfoController : Controller
     {
         private sqlContext _context;
 
-        public CustomerController(sqlContext context)
+        public CustomerInfoController(sqlContext context)
         {
             _context = context;
         }
@@ -81,6 +81,25 @@ namespace FoodOrderApp.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetCustomers", new { id = customerInfo.CustomerId }, customerInfo);
         }
+
+        // DELETE: api/CustomerInfo/2
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<CustomerInfo>> DeleteCustomerInfo(int id)
+        {
+            var customerInfo = await _context.CustomerInfo.FindAsync(id);
+            if (customerInfo == null)
+            {
+                return NotFound();
+            }
+            _context.CustomerInfo.Remove(customerInfo);
+            await _context.SaveChangesAsync();
+            return customerInfo;
+        }
+        private bool CustomerInfoExists(int id)
+        {
+            return _context.CustomerInfo.Any(e => e.CustomerId == id);
+        }
+
 
 
         // Transportation types
