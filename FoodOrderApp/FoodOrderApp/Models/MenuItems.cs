@@ -14,7 +14,7 @@ namespace FoodOrderApp.Models
         public string DishName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public long RestaurantId { get; set; }
+        public int RestaurantId { get; set; }
         public string ImageUrl { get; set; }
         public string MenuSection { get; set; }
 
