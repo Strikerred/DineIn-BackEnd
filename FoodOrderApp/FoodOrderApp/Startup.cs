@@ -65,6 +65,9 @@ namespace FoodOrderApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("FoodOrderApp")));
 
+            services.AddDbContext<sqlContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("FoodOrderApp")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedEmail = true)
                 .AddDefaultUI()
                 .AddRoles<IdentityRole>()

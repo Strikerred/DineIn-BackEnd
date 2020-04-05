@@ -1,10 +1,15 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodOrderApp.Models
 {
     public partial class Orders
     {
+        [PrimaryKey, AutoIncrement]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long OrderId { get; set; }
         public long CustomerId { get; set; }
         public long MenuItemId { get; set; }
