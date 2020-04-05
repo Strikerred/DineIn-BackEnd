@@ -75,7 +75,6 @@ namespace FoodOrderApp.Controllers
 
         // POST: api/CustomerInfo
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<CustomerInfo>> PostCustomerInfo(CustomerInfo customerInfo)
         {
             _context.CustomerInfo.Add(customerInfo);
