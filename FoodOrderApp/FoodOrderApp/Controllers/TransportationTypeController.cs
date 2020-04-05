@@ -27,5 +27,19 @@ namespace FoodOrderApp.Controllers
         {
             return await _context.TransportationType.ToListAsync();
         }
+
+        // GET: api/TransportationType/2
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TransportationType>> GetTransportationType(int id)
+        {
+            var transportationType = await _context.TransportationType.FindAsync(id);
+
+            if (transportationType == null)
+            {
+                return NotFound();
+            }
+
+            return transportationType;
+        }
     }
 }
