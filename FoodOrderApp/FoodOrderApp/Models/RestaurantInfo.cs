@@ -14,7 +14,7 @@ namespace FoodOrderApp.Models
         public string RestaurantName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        public int? FoodCategoryId { get; set; }
+        public int FoodCategoryId { get; set; }
 
         public virtual FoodCategory FoodCategory { get; set; }
         public virtual ICollection<MenuItems> MenuItems { get; set; }

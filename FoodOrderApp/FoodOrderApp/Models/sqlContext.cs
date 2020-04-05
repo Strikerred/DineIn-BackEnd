@@ -36,7 +36,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasIndex(e => e.RoleId);
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.RoleId).IsRequired();
 
@@ -56,7 +56,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasIndex(e => e.UserId);
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.UserId).IsRequired();
 
