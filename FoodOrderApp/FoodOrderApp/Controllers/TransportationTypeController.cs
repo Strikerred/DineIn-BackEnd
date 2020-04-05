@@ -82,6 +82,20 @@ namespace FoodOrderApp.Controllers
             return CreatedAtAction("GetTransportationTypes", new { id = transportationType.TransportationId }, transportationType);
         }
 
+        // DELETE: api/TransportationType/2
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<TransportationType>> DeleteTransportationType(int id)
+        {
+            var transportationType = await _context.TransportationType.FindAsync(id);
+            if (transportationType == null)
+            {
+                return NotFound();
+            }
+            _context.TransportationType.Remove(transportationType);
+            await _context.SaveChangesAsync();
+            return transportationType;
+        }
+
         private bool TransportationTypeExists(int id)
         {
             throw new NotImplementedException();
