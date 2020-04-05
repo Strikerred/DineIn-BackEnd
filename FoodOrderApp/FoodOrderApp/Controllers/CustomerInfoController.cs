@@ -31,17 +31,20 @@ namespace FoodOrderApp.Controllers
         {
             return await _context.CustomerInfo.ToListAsync();
         }
-        // Get one Customer object by id
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<CustomerInfo>> GetCustomer(int id)
-        //{
-        //    var oneCustomer = await _context.CustomerInfo.FindAsync(id);
-        //    if (oneCustomer == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return oneCustomer;
-        //}
+
+        // GET: api/CustomerInfo/2
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerInfo>> GetCustomerInfo(int id)
+        {
+            var customerInfo = await _context.CustomerInfo.FindAsync(id);
+
+            if (customerInfo == null)
+            {
+                return NotFound();
+            }
+
+            return customerInfo;
+        }
 
         ////Update one customer object by id
         //[HttpPut("{id}")]
@@ -72,7 +75,7 @@ namespace FoodOrderApp.Controllers
         //}
 
         // POST: api/customer
-        
+
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<CustomerInfo>> PostCustomerInfo(CustomerInfo customerInfo)
