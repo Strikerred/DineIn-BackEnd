@@ -13,7 +13,7 @@ namespace FoodOrderApp.Models
         public int OrderId { get; set; }
         public int CustomerId { get; set; }
         public int MenuItemId { get; set; }
-        public long OrderTotal { get; set; }
+        public double OrderTotal { get; set; }
         public int PaymentTypeId { get; set; }
 
         public virtual CustomerInfo Customer { get; set; }
