@@ -27,11 +27,21 @@ namespace FoodOrderApp.Controllers
         // Customer Data
         // show all customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerInfo>>>GetCustomers()
+        public async Task<ActionResult<IEnumerable<CustomerInfo>>> GetCustomers()
         {
             return await _context.CustomerInfo.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerInfo>>GetCustomer(int id)
+        {
+            var oneCustomer = await _context.CustomerInfo.FindAsync(id);
+            if(oneCustomer == null)
+            {
+                return NotFound();
+            }
+            return oneCustomer;
+        }
 
         // Transportation types
         
