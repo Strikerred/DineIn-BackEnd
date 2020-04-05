@@ -10,7 +10,7 @@ namespace FoodOrderApp.Models
             Orders = new HashSet<Orders>();
         }
 
-        public long MenuItemId { get; set; }
+        public int MenuItemId { get; set; }
         public string DishName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

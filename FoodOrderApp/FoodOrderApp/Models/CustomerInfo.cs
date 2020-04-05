@@ -5,7 +5,7 @@ namespace FoodOrderApp.Models
 {
     public partial class CustomerInfo
     {
-        public CustomerInfo()
+        public CustomerInfo(sqlContext _context)
         {
             Orders = new HashSet<Orders>();
         }

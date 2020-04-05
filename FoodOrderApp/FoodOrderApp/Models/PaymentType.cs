@@ -10,7 +10,7 @@ namespace FoodOrderApp.Models
             Orders = new HashSet<Orders>();
         }
 
-        public long PaymentTypeId { get; set; }
+        public int PaymentTypeId { get; set; }
         public string PaymentName { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }
