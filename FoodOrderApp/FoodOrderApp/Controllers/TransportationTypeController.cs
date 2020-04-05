@@ -41,5 +41,37 @@ namespace FoodOrderApp.Controllers
 
             return transportationType;
         }
+
+        ////Update one transportation type object by id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTransportationType(int id, TransportationType transportationType)
+        {
+            if (id != transportationType.TransportationId)
+            {
+                return BadRequest();
+            }
+            _context.Entry(transportationType).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TransportationTypeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        private bool TransportationTypeExists(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

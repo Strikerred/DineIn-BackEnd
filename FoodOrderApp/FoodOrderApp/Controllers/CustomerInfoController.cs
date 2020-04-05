@@ -100,10 +100,5 @@ namespace FoodOrderApp.Controllers
         {
             return _context.CustomerInfo.Any(e => e.CustomerId == id);
         }
-
-
-
-        // Transportation types
-
     }
 }
