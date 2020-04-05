@@ -10,7 +10,7 @@ namespace FoodOrderApp.Models
             RestaurantInfo = new HashSet<RestaurantInfo>();
         }
 
-        public long FoodCategoryId { get; set; }
+        public int FoodCategoryId { get; set; }
         public string CategoryName { get; set; }
 
         public virtual ICollection<RestaurantInfo> RestaurantInfo { get; set; }
