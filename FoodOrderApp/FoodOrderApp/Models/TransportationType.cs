@@ -5,9 +5,9 @@ namespace FoodOrderApp.Models
 {
     public partial class TransportationType
     {
-        public long TransportationId { get; set; }
+        public int TransportationId { get; set; }
         public string TransportationName { get; set; }
         public string DriversLicense { get; set; }
-        public long IsVerified { get; set; }
+        public bool IsVerified { get; set; }
     }
 }

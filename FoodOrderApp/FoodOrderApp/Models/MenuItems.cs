@@ -10,11 +10,11 @@ namespace FoodOrderApp.Models
             Orders = new HashSet<Orders>();
         }
 
-        public long MenuItemId { get; set; }
+        public int MenuItemId { get; set; }
         public string DishName { get; set; }
         public string Description { get; set; }
-        public byte[] Price { get; set; }
-        public long RestaurantId { get; set; }
+        public decimal Price { get; set; }
+        public int RestaurantId { get; set; }
         public string ImageUrl { get; set; }
         public string MenuSection { get; set; }
 
