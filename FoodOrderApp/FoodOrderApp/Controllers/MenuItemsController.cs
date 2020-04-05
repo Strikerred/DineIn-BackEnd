@@ -22,6 +22,14 @@ namespace FoodOrderApp.Controllers
         }
 
 
+        [HttpGet]
+        [Route("seedData")]
+        public async Task<ActionResult> SeedData()
+        {
+            Seeder seeder = new Seeder(_context);
+            return Ok();
+        }
+
         // GET: api/MenuItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MenuItems>>> GetMenuItems()
