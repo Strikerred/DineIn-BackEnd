@@ -36,7 +36,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasIndex(e => e.RoleId);
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.RoleId).IsRequired();
 
@@ -56,7 +56,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasIndex(e => e.UserId);
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.UserId).IsRequired();
 
@@ -116,7 +116,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.CustomerId);
 
-                entity.Property(e => e.CustomerId).ValueGeneratedNever();
+                entity.Property(e => e.CustomerId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Address).IsRequired();
 
@@ -133,7 +133,7 @@ namespace FoodOrderApp.Models
 
             modelBuilder.Entity<FoodCategory>(entity =>
             {
-                entity.Property(e => e.FoodCategoryId).ValueGeneratedNever();
+                entity.Property(e => e.FoodCategoryId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CategoryName).IsRequired();
             });
@@ -142,7 +142,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.MenuItemId);
 
-                entity.Property(e => e.MenuItemId).ValueGeneratedNever();
+                entity.Property(e => e.MenuItemId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DishName).IsRequired();
 
@@ -166,7 +166,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.OrderId);
 
-                entity.Property(e => e.OrderId).ValueGeneratedNever();
+                entity.Property(e => e.OrderId).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
@@ -186,7 +186,7 @@ namespace FoodOrderApp.Models
 
             modelBuilder.Entity<PaymentType>(entity =>
             {
-                entity.Property(e => e.PaymentTypeId).ValueGeneratedNever();
+                entity.Property(e => e.PaymentTypeId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.PaymentName).IsRequired();
             });
@@ -195,7 +195,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.RestaurantId);
 
-                entity.Property(e => e.RestaurantId).ValueGeneratedNever();
+                entity.Property(e => e.RestaurantId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Address).IsRequired();
 
@@ -212,7 +212,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.TransportationId);
 
-                entity.Property(e => e.TransportationId).ValueGeneratedNever();
+                entity.Property(e => e.TransportationId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.IsVerified).HasColumnName("isVerified");
 
