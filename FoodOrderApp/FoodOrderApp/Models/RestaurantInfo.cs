@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodOrderApp.Models
 {
-    public class RestaurantInfo
+    public partial class RestaurantInfo
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RestaurantId { get; set; }
-        [Required]
-        public String RestaurantName { get; set; }
-        public String PhoneNumber { get; set; }
+        public RestaurantInfo()
+        {
+            MenuItems = new HashSet<MenuItems>();
+        }
 
-        public String Address { get; set; }
-        public String Cuisine { get; set; }
+        public long RestaurantId { get; set; }
+        public string RestaurantName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public long? FoodCategoryId { get; set; }
+
+        public virtual FoodCategory FoodCategory { get; set; }
+        public virtual ICollection<MenuItems> MenuItems { get; set; }
     }
 }

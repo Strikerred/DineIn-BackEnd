@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodOrderApp.Models
 {
-    public class Orders
+    public partial class Orders
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
-        [Required]
-        public ICollection<MenuItems> MenuItems { get; set; }
-        [Required]
-        public String OrdererFirstName { get; set; }
-        [Required]
-        public String OrdererEmail { get; set; }
-        [Required]
-        public String OrdererPhoneNumber { get; set; }
-        [Required]
-        public decimal TotalOrderPrice { get; set; }
+        public long OrderId { get; set; }
+        public long CustomerId { get; set; }
+        public long MenuItemId { get; set; }
+        public long OrderTotal { get; set; }
+        public long PaymentTypeId { get; set; }
 
+        public virtual CustomerInfo Customer { get; set; }
+        public virtual MenuItems MenuItem { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
     }
 }

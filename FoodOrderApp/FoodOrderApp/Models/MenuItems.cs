@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodOrderApp.Models
 {
-    public class MenuItems
+    public partial class MenuItems
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MenuItemId { get; set; }
-        [Required]
-        public String DishName { get; set; }
-        public String Description { get; set; }
-        public String ImageURL { get; set; }
-        [Required]
-        public decimal Price { get; set; }
-        [Required]
-        public String RestaurantName { get; set; }
-        public String MenuSection { get; set; }
+        public MenuItems()
+        {
+            Orders = new HashSet<Orders>();
+        }
 
+        public long MenuItemId { get; set; }
+        public string DishName { get; set; }
+        public string Description { get; set; }
+        public byte[] Price { get; set; }
+        public long RestaurantId { get; set; }
+        public string ImageUrl { get; set; }
+        public string MenuSection { get; set; }
+
+        public virtual RestaurantInfo Restaurant { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }
