@@ -50,7 +50,6 @@ namespace FoodOrderApp
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
@@ -64,7 +63,7 @@ namespace FoodOrderApp
             });
 
 
-            services.AddDbContext<sqlContext>(options => 
+            services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlite(Configuration.GetConnectionString("FoodOrderApp")));
 
             services.AddDbContext<sqlContext>(options =>
@@ -73,7 +72,7 @@ namespace FoodOrderApp
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedEmail = true)
                 .AddDefaultUI()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<sqlContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             services.AddSwaggerGen(c =>
