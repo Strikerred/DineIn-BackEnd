@@ -8,6 +8,6 @@ namespace FoodOrderApp.Models
         public long TransportationId { get; set; }
         public string TransportationName { get; set; }
         public string DriversLicense { get; set; }
-        public long IsVerified { get; set; }
+        public bool IsVerified { get; set; }
     }
 }

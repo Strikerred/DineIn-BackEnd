@@ -37,7 +37,8 @@ namespace FoodOrderApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options => {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -49,7 +50,7 @@ namespace FoodOrderApp
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
- 
+
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
@@ -61,8 +62,9 @@ namespace FoodOrderApp
                 = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt_Key"]))
                 };
             });
-            
-            services.AddDbContext<ApplicationDbContext>(options =>
+
+
+            services.AddDbContext<sqlContext>(options => 
                 options.UseSqlite(Configuration.GetConnectionString("FoodOrderApp")));
 
             services.AddDbContext<sqlContext>(options =>
@@ -71,12 +73,13 @@ namespace FoodOrderApp
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedEmail = true)
                 .AddDefaultUI()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<sqlContext>();
 
 
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDo API", Version = "v1"  });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDo API", Version = "v1" });
 
             });
 
