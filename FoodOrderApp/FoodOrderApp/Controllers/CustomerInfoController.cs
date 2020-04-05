@@ -47,35 +47,33 @@ namespace FoodOrderApp.Controllers
         }
 
         ////Update one customer object by id
-        //[HttpPut("{id}")]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //public async Task<IActionResult> UpdateCustomerInfo(int id, CustomerInfo customerInfo)
-        //{
-        //    if(id != customerInfo.CustomerId)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    _context.Entry(customerInfo).State = EntityState.Modified;
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch(DbUpdateConcurrencyException)
-        //    {
-        //        if(!CustomerInfoExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return NoContent();
-        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomerInfo(int id, CustomerInfo customerInfo)
+        {
+            if (id != customerInfo.CustomerId)
+            {
+                return BadRequest();
+            }
+            _context.Entry(customerInfo).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CustomerInfoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
 
-        // POST: api/customer
-
+        // POST: api/CustomerInfo
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<CustomerInfo>> PostCustomerInfo(CustomerInfo customerInfo)
