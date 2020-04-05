@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FoodOrderApp.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,6 +70,16 @@ namespace FoodOrderApp.Controllers
                 }
             }
             return NoContent();
+        }
+
+        // POST: api/TransportationType
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<CustomerInfo>> PostTransportationType(TransportationType transportationType)
+        {
+            _context.TransportationType.Add(transportationType);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetTransportationTypes", new { id = transportationType.TransportationId }, transportationType);
         }
 
         private bool TransportationTypeExists(int id)
