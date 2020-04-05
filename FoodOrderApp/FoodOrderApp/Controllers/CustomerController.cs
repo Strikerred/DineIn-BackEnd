@@ -32,46 +32,58 @@ namespace FoodOrderApp.Controllers
             return await _context.CustomerInfo.ToListAsync();
         }
         // Get one Customer object by id
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CustomerInfo>> GetCustomer(int id)
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<CustomerInfo>> GetCustomer(int id)
+        //{
+        //    var oneCustomer = await _context.CustomerInfo.FindAsync(id);
+        //    if (oneCustomer == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return oneCustomer;
+        //}
+
+        ////Update one customer object by id
+        //[HttpPut("{id}")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //public async Task<IActionResult> UpdateCustomerInfo(int id, CustomerInfo customerInfo)
+        //{
+        //    if(id != customerInfo.CustomerId)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    _context.Entry(customerInfo).State = EntityState.Modified;
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch(DbUpdateConcurrencyException)
+        //    {
+        //        if(!CustomerInfoExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    return NoContent();
+        //}
+
+        // POST: api/customer
+        
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<CustomerInfo>> PostCustomerInfo(CustomerInfo customerInfo)
         {
-            var oneCustomer = await _context.CustomerInfo.FindAsync(id);
-            if (oneCustomer == null)
-            {
-                return NotFound();
-            }
-            return oneCustomer;
+            _context.CustomerInfo.Add(customerInfo);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetCustomers", new { id = customerInfo.CustomerId }, customerInfo);
         }
 
-        //Update one customer object by id
-        [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> UpdateCustomerInfo(int id, CustomerInfo customerInfo)
-        {
-            if(id != customerInfo.CustomerId)
-            {
-                return BadRequest();
-            }
-            _context.Entry(customerInfo).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch(DbUpdateConcurrencyException)
-            {
-                if(!CustomerInfoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
 
         // Transportation types
-        
+
     }
 }
