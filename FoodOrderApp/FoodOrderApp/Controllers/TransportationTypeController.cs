@@ -74,7 +74,6 @@ namespace FoodOrderApp.Controllers
 
         // POST: api/TransportationType
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<CustomerInfo>> PostTransportationType(TransportationType transportationType)
         {
             _context.TransportationType.Add(transportationType);
