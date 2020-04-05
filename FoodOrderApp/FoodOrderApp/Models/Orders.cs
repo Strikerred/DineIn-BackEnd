@@ -10,11 +10,11 @@ namespace FoodOrderApp.Models
     {
         [PrimaryKey, AutoIncrement]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long OrderId { get; set; }
-        public long CustomerId { get; set; }
-        public long MenuItemId { get; set; }
+        public int OrderId { get; set; }
+        public int CustomerId { get; set; }
+        public int MenuItemId { get; set; }
         public long OrderTotal { get; set; }
-        public long PaymentTypeId { get; set; }
+        public int PaymentTypeId { get; set; }
 
         public virtual CustomerInfo Customer { get; set; }
         public virtual MenuItems MenuItem { get; set; }

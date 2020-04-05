@@ -10,11 +10,11 @@ namespace FoodOrderApp.Models
             MenuItems = new HashSet<MenuItems>();
         }
 
-        public long RestaurantId { get; set; }
+        public int RestaurantId { get; set; }
         public string RestaurantName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        public long? FoodCategoryId { get; set; }
+        public int? FoodCategoryId { get; set; }
 
         public virtual FoodCategory FoodCategory { get; set; }
         public virtual ICollection<MenuItems> MenuItems { get; set; }

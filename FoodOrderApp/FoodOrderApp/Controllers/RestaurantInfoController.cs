@@ -14,6 +14,7 @@ namespace FoodOrderApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class RestaurantInfoController : ControllerBase
     {
         private readonly sqlContext _context;
@@ -80,6 +81,7 @@ namespace FoodOrderApp.Controllers
         }
         // DELETE: api/RestaurantInfoes/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<RestaurantInfo>> DeleteRestaurantInfo(int id)
         {
             var restaurantInfo = await _context.RestaurantInfo.FindAsync(id);

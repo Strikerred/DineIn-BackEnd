@@ -16,8 +16,8 @@ namespace FoodOrderApp.ResponseModel
         public int Year { get; set; }
         public string Cvc { get; set; }
         public long Amount { get; set; }
-        public long CustomerId { get; set; }
-        public long MenuItemId { get; set; }
-        public long PaymentTypeId { get; set; }
+        public int CustomerId { get; set; }
+        public int MenuItemId { get; set; }
+        public int PaymentTypeId { get; set; }
     }
 }
