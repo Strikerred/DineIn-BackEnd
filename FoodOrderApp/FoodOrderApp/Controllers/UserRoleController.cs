@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using FoodOrderApp.Data;
 using FoodOrderApp.Repositories;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodOrderApp.Controllers
 {
-    //[Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
         private ApplicationDbContext _context;
@@ -23,6 +23,7 @@ namespace FoodOrderApp.Controllers
             _serviceProvider = serviceProvider;
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             UserRepo userRepo = new UserRepo(_context);
@@ -30,6 +31,7 @@ namespace FoodOrderApp.Controllers
             return View(users);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Detail(string userName)
         {
             UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
@@ -38,6 +40,7 @@ namespace FoodOrderApp.Controllers
             return View(roles);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(string userName)
         {
             ViewBag.SelectedUser = userName;
@@ -64,7 +67,7 @@ namespace FoodOrderApp.Controllers
             ViewBag.UserSelectList = userSelectList;
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(UserRoleVM userRoleVM)
         {
