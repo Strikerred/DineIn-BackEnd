@@ -52,7 +52,7 @@ namespace FoodOrderApp.Models
                     MenuSection="Lunch / Dinner"
                 },
 
-                new MenuItems {DishName = "Cappicino",
+                new MenuItems {DishName = "Cappuccino",
                     ImageUrl="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg",
                     Price=12,
                     RestaurantId=1,
