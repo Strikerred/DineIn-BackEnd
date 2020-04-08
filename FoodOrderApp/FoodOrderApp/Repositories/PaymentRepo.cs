@@ -90,17 +90,15 @@ namespace FoodOrderApp.Repositories
 
             _context.Orders.Add(order);
 
-            await _context.SaveChangesAsync();
-
             foreach (int item in orderRM.MenuItems)
             {
-                var StoreItem = new ItemSelected { OrderId = randomId, ItemId = item };
+                var StoreItem = new SelectedItem { OrderId = randomId, MenuItemId = item };
                 items.Add(item);
-                _context.ItemSelected.Add(StoreItem);
-                _context.SaveChanges();
-                _context.Entry(StoreItem).State = EntityState.Detached;
+                _context.SelectedItem.Add(StoreItem);
             }
-           
+
+            await _context.SaveChangesAsync();
+
             var returnOrder = new OrderCompleteRM
             {
                 OrderId = order.OrderId,
