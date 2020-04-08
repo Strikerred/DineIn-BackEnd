@@ -77,7 +77,7 @@ namespace FoodOrderApp.Controllers
                 }
             }
             jsonResponse.token = "";
-            jsonResponse.status = "Invalid Login";
+            jsonResponse.status = "Invalid Register";
             return Json(jsonResponse);
         }
 

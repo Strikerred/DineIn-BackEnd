@@ -7,7 +7,7 @@ namespace FoodOrderApp.Models
     {
         public MenuItems()
         {
-            Orders = new HashSet<Orders>();
+            SelectedItem = new HashSet<SelectedItem>();
         }
 
         public int MenuItemId { get; set; }
@@ -19,6 +19,6 @@ namespace FoodOrderApp.Models
         public string MenuSection { get; set; }
 
         public virtual RestaurantInfo Restaurant { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<SelectedItem> SelectedItem { get; set; }
     }
 }

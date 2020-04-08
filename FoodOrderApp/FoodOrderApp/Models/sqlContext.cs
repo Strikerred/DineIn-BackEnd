@@ -29,7 +29,7 @@ namespace FoodOrderApp.Models
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<RestaurantInfo> RestaurantInfo { get; set; }
         public virtual DbSet<TransportationType> TransportationType { get; set; }
-        public virtual DbSet<ItemSelected> ItemSelected { get; set; }
+        public virtual DbSet<SelectedItem> SelectedItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -174,27 +174,25 @@ namespace FoodOrderApp.Models
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.SetNull);
 
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
                 entity.HasOne(d => d.PaymentType)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PaymentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<ItemSelected>(entity =>
+            modelBuilder.Entity<SelectedItem>(entity =>
             {
-                entity.Property(e => e.ItemSelectedId).ValueGeneratedOnAdd();
+                entity.Property(e => e.SelectedItemId).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.Orders)
-                    .WithMany(p => p.ItemSelected)
+                    .WithMany(p => p.SelectedItem)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-                entity.Property(e => e.ItemId).IsRequired();
+                entity.HasOne(d => d.MenuItems)
+                    .WithMany(p => p.SelectedItem)
+                    .HasForeignKey(d => d.MenuItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
                
             });
 

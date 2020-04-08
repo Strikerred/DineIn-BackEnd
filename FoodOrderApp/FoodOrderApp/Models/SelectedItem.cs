@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace FoodOrderApp.Models
 {
-    public class ItemSelected
+    public class SelectedItem
     {
-        public int ItemSelectedId { get; set; }
+        public int SelectedItemId { get; set; }
         public int OrderId { get; set; }
-        public int ItemId { get; set; }
+        public int MenuItemId { get; set; }
 
+        public virtual MenuItems MenuItems { get; set; }
         public virtual Orders Orders { get; set; }
+
     }
 }
