@@ -29,6 +29,7 @@ namespace FoodOrderApp.Models
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<RestaurantInfo> RestaurantInfo { get; set; }
         public virtual DbSet<TransportationType> TransportationType { get; set; }
+        public virtual DbSet<ItemSelected> ItemSelected { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -166,7 +167,7 @@ namespace FoodOrderApp.Models
             {
                 entity.HasKey(e => e.OrderId);
 
-                entity.Property(e => e.OrderId).ValueGeneratedOnAdd();
+                entity.Property(e => e.OrderId).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
@@ -182,6 +183,19 @@ namespace FoodOrderApp.Models
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PaymentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<ItemSelected>(entity =>
+            {
+                entity.Property(e => e.ItemSelectedId).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Orders)
+                    .WithMany(p => p.ItemSelected)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.Property(e => e.ItemId).IsRequired();
+               
             });
 
             modelBuilder.Entity<PaymentType>(entity =>

@@ -1,5 +1,6 @@
 ﻿using FoodOrderApp.Models;
 using FoodOrderApp.ResponseModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 using System;
@@ -22,6 +23,9 @@ namespace FoodOrderApp.Repositories
 
         public async Task<Tuple<bool, object>> Order(OrderRM orderRM, string userName)
         {
+            Random random = new Random();
+            var items = new List<int>();
+
             //PaymentTypeId 3 is pay by cash
             if (orderRM.PaymentTypeId != 3)
             {
@@ -71,23 +75,41 @@ namespace FoodOrderApp.Repositories
             var order = new Orders
             {
                 CustomerId = orderRM.CustomerId,
-                MenuItemId = orderRM.MenuItemId,
                 OrderTotal = orderRM.Amount,
                 PaymentTypeId = orderRM.PaymentTypeId,
             };
 
-            _context.Orders.Add(order);
+            var randomId = random.Next(10000);
 
-            var returnOrder = new OrderCompleteRM
+            while (_context.Orders.Any(id => id.OrderId == randomId))
             {
-                CustomerId = order.CustomerId,
-                MenuItemId = order.MenuItemId,
-                OrderTotal = order.OrderTotal,
-                PaymentTypeId = order.PaymentTypeId                
-            };
+                randomId = random.Next(10000);
+            }
+
+            order.OrderId = randomId;
+
+            _context.Orders.Add(order);
 
             await _context.SaveChangesAsync();
 
+            foreach (int item in orderRM.MenuItems)
+            {
+                var StoreItem = new ItemSelected { OrderId = randomId, ItemId = item };
+                items.Add(item);
+                _context.ItemSelected.Add(StoreItem);
+                _context.SaveChanges();
+                _context.Entry(StoreItem).State = EntityState.Detached;
+            }
+           
+            var returnOrder = new OrderCompleteRM
+            {
+                OrderId = order.OrderId,
+                CustomerId = order.CustomerId,
+                MenuItems = items,
+                OrderTotal = order.OrderTotal,
+                PaymentTypeId = order.PaymentTypeId                
+            };
+           
             return new Tuple<bool, object>(true, returnOrder);
         }
     }

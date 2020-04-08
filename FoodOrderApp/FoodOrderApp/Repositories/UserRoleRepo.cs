@@ -25,8 +25,9 @@ namespace FoodOrderApp.Repositories
             if (user != null)
             {
                 await UserManager.AddToRoleAsync(user, roleName);
+                return true;
             }
-            return true;
+            return false; //return false added 
         }
 
         public async Task<bool> RemoveUserRole(string email, string roleName)

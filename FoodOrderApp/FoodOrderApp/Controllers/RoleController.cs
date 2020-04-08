@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FoodOrderApp.Data;
 using FoodOrderApp.Repositories;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrderApp.Controllers
@@ -19,18 +20,21 @@ namespace FoodOrderApp.Controllers
         }
 
         // GET: Role
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             RoleRepo roleRepo = new RoleRepo(_context);
             return View(roleRepo.GetAllRoles());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(RoleVM roleVM)
         {
