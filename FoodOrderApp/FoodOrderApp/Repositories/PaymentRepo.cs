@@ -24,7 +24,7 @@ namespace FoodOrderApp.Repositories
         public async Task<Tuple<bool, object>> Order(OrderRM orderRM, string userName)
         {
             Random random = new Random();
-            var items = new List<int>();
+            var items = new List<ItemsRM>();
 
             //PaymentTypeId 3 is pay by cash
             if (orderRM.PaymentTypeId != 3)
@@ -90,9 +90,9 @@ namespace FoodOrderApp.Repositories
 
             _context.Orders.Add(order);
 
-            foreach (int item in orderRM.MenuItems)
+            foreach (ItemsRM item in orderRM.itemsRM)
             {
-                var StoreItem = new SelectedItem { OrderId = randomId, MenuItemId = item };
+                var StoreItem = new SelectedItem { OrderId = randomId, MenuItemId = item.Item.MenuItemId, Quantity = item.qty};
                 items.Add(item);
                 _context.SelectedItem.Add(StoreItem);
             }
@@ -103,7 +103,7 @@ namespace FoodOrderApp.Repositories
             {
                 OrderId = order.OrderId,
                 Customer = userName,
-                MenuItems = items,
+                ItemsRM = items,
                 OrderTotal = order.OrderTotal,
                 PaymentTypeId = order.PaymentTypeId                
             };

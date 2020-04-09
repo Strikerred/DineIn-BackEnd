@@ -106,7 +106,8 @@ namespace FoodOrderApp.Models
                     .WithMany(p => p.SelectedItem)
                     .HasForeignKey(d => d.MenuItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
-               
+
+                entity.Property(e => e.Quantity).IsRequired();
             });
 
             modelBuilder.Entity<PaymentType>(entity =>

@@ -10,7 +10,7 @@ namespace FoodOrderApp.ResponseModel
         public int OrderId { get; set; }
         public double OrderTotal { get; set; }
         public string Customer { get; set; }
-        public IEnumerable<int> MenuItems { get; set; }
+        public IEnumerable<ItemsRM> ItemsRM { get; set; }
         public int PaymentTypeId { get; set; }
     }
 }
