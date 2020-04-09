@@ -92,7 +92,7 @@ namespace FoodOrderApp.Repositories
 
             foreach (ItemsRM item in orderRM.itemsRM)
             {
-                var StoreItem = new SelectedItem { OrderId = randomId, MenuItemId = item.MenuItems.MenuItemId, Quantity = item.Quantity};
+                var StoreItem = new SelectedItem { OrderId = randomId, MenuItemId = item.Item.MenuItemId, Quantity = item.qty};
                 items.Add(item);
                 _context.SelectedItem.Add(StoreItem);
             }
@@ -103,7 +103,7 @@ namespace FoodOrderApp.Repositories
             {
                 OrderId = order.OrderId,
                 Customer = userName,
-                MenuItems = items,
+                ItemsRM = items,
                 OrderTotal = order.OrderTotal,
                 PaymentTypeId = order.PaymentTypeId                
             };

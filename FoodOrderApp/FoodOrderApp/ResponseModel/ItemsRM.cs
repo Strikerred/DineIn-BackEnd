@@ -8,7 +8,7 @@ namespace FoodOrderApp.ResponseModel
 {
     public class ItemsRM
     {
-        public MenuItems MenuItems { get; set; }
-        public int Quantity { get; set; }
+        public MenuItems Item { get; set; }
+        public int qty { get; set; }
     }
 }
