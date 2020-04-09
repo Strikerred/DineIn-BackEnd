@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodOrderApp.Models
@@ -12,7 +12,7 @@ namespace FoodOrderApp.Models
             Orders = new HashSet<Orders>();
         }
 
-        [Key]
+        [PrimaryKey, AutoIncrement]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentTypeId { get; set; }
         public string PaymentName { get; set; }

@@ -152,29 +152,6 @@ namespace FoodOrderApp.Controllers
             return Json(jsonResponse);
         }
 
-        [HttpPost]
-        [Route("AddUserRole")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Create(UserRoleVM userRoleVM)
-        {
-            dynamic jsonResponse = new JObject();
-
-            UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
-
-            if (ModelState.IsValid)
-            {
-                var addUR = await userRoleRepo.AddUserRole(userRoleVM.Email,
-                                                            userRoleVM.Role);
-                if (addUR)
-                {
-                    jsonResponse.status = $"Role {userRoleVM.Role} was added to {userRoleVM.Email}";
-                    return Json(jsonResponse);
-                }
-            }
-            jsonResponse.status = $"The role {userRoleVM.Role}  could not be added to {userRoleVM.Email}";
-            return Json(jsonResponse);
-        }
-
         List<Claim> AddUserRoleClaims(List<Claim> claims, string userId)
         { 
             var userRoleList = _context.UserRoles.Where(ur => ur.UserId == userId);

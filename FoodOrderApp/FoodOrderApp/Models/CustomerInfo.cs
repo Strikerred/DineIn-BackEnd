@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodOrderApp.Models
 {
@@ -10,6 +12,8 @@ namespace FoodOrderApp.Models
             Orders = new HashSet<Orders>();
         }
 
+        [PrimaryKey, AutoIncrement]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
