@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodOrderApp.Models
 {
     public class SelectedItem
     {
+        [PrimaryKey, AutoIncrement]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SelectedItemId { get; set; }
         public int OrderId { get; set; }
         public int MenuItemId { get; set; }
