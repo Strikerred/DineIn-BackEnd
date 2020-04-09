@@ -102,7 +102,7 @@ namespace FoodOrderApp.Repositories
             var returnOrder = new OrderCompleteRM
             {
                 OrderId = order.OrderId,
-                CustomerId = order.CustomerId,
+                Customer = userName,
                 MenuItems = items,
                 OrderTotal = order.OrderTotal,
                 PaymentTypeId = order.PaymentTypeId                
