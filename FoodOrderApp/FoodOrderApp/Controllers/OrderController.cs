@@ -31,6 +31,7 @@ namespace FoodOrderApp.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Payment([FromBody]OrderRM OrderRM)
         {
+
             var claim = HttpContext.User.Claims.ElementAt(0);
             string userName = claim.Value;
 
