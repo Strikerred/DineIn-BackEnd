@@ -71,10 +71,12 @@ namespace FoodOrderApp.Repositories
                     return new Tuple<bool, object>(false, "Payment cannot be completed");
                 }
             }
-          
+
+            var customerId = _context.CustomerInfo.Where(c => c.UsersEmail == userName).FirstOrDefault().CustomerId;
+
             var order = new Orders
             {
-                CustomerId = orderRM.CustomerId,
+                CustomerId = customerId,
                 OrderTotal = orderRM.Amount,
                 PaymentTypeId = orderRM.PaymentTypeId,
             };

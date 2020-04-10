@@ -43,6 +43,8 @@ namespace FoodOrderApp.Models
                 entity.Property(e => e.UserRole).IsRequired();
 
                 entity.Property(e => e.UsersEmail).IsRequired();
+
+                entity.Property(e => e.TransportationType).IsRequired();
             });
 
             modelBuilder.Entity<FoodCategory>(entity =>

@@ -21,6 +21,7 @@ namespace FoodOrderApp.Models
         public string UserRole { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
+        public int? TransportationType { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }
     }
