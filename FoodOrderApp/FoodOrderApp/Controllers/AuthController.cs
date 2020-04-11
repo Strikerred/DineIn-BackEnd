@@ -98,7 +98,7 @@ namespace FoodOrderApp.Controllers
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
-            return new RedirectResult("https://www.google.ca");
+            return new RedirectResult("http://localhost:3000/confirmedEmail");
         }
 
 
