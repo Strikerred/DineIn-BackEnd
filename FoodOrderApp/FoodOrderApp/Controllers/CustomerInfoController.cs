@@ -62,39 +62,6 @@ namespace FoodOrderApp.Controllers
             return customerInfo;
         }
 
-        ////Update one customer object by id
-        [HttpPut]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> UpdateCustomerInfo(CustomerInfo customerInfo)
-        {
-            var claim = HttpContext.User.Claims.ElementAt(0);
-            string userName = claim.Value;
-
-            int id = _context.CustomerInfo.Where(u => u.UsersEmail == userName).FirstOrDefault().CustomerId;
-
-            if (id == 0)
-            {
-                return BadRequest();
-            }
-            _context.Entry(customerInfo).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerInfoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
-
         // POST: api/CustomerInfo
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -102,15 +69,55 @@ namespace FoodOrderApp.Controllers
         {
             var claim = HttpContext.User.Claims.ElementAt(0);
             string userNameJwt = claim.Value;
-
-            await AddRole(userNameJwt, customerInfo.UserRole);
-
             customerInfo.UsersEmail = userNameJwt;
 
-            _context.CustomerInfo.Add(customerInfo);
-            await _context.SaveChangesAsync();
+            if (customerInfo.TransportationType == null)
+            {
+                customerInfo.TransportationType = 0;
+            }
 
-            return Ok("Profile has been completed");
+            if (!_context.CustomerInfo.Any(u => u.UsersEmail == userNameJwt))
+            {
+                await AddRole(userNameJwt, customerInfo.UserRole);                
+
+                _context.Add(customerInfo);
+
+                await _context.SaveChangesAsync();
+
+                return Ok("Profile has been completed");
+            }
+            else
+            {
+                var userId = new CustomerRepo(_context).GetCustomer(userNameJwt);
+
+                customerInfo.CustomerId = userId;
+
+                var local = _context.Set<CustomerInfo>().Local.FirstOrDefault(entry => entry.CustomerId.Equals(customerInfo.CustomerId));
+
+                if (local != null)
+                {
+                    _context.Entry(local).State = EntityState.Detached;
+                }
+                
+                _context.Entry(customerInfo).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return Ok("Profile has been updated");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CustomerInfoExists(userId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }               
+            }          
         }
 
         // DELETE: api/CustomerInfo/2
