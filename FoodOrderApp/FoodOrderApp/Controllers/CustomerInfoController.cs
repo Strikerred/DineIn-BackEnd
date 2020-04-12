@@ -49,17 +49,19 @@ namespace FoodOrderApp.Controllers
         {
             var claim = HttpContext.User.Claims.ElementAt(0);
             string userName = claim.Value;
+            dynamic jsonResponse = new JObject();
 
-            int id = _context.CustomerInfo.Where(u => u.UsersEmail == userName).FirstOrDefault().CustomerId;
-
-            var customerInfo = await _context.CustomerInfo.FindAsync(id);
-
-            if (customerInfo == null)
+            if (_context.CustomerInfo.Any(u => u.UsersEmail == userName))
             {
-                return NotFound();
+                int id = _context.CustomerInfo.Where(u => u.UsersEmail == userName).FirstOrDefault().CustomerId;
+
+                var customerInfo = await _context.CustomerInfo.FindAsync(id);
+
+                return customerInfo;
             }
 
-            return customerInfo;
+            jsonResponse.status = "Profile has not been completed yet";
+            return Json(jsonResponse);
         }
 
         // POST: api/CustomerInfo
